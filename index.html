@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="iUZ8dsYLLbBvTRev3mJI4wjUpJKiLmA9rTaW84k38V4" />
-  
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -16,147 +17,244 @@
 
   <meta property="og:site_name" content="Cyber Slot" />
   <meta property="og:title" content="Cyber Slot - Official Website" />
-  <meta property="og:description" content="I'm Cyber Slot — a C# developer, automation enthusiast, and creator of harmless GDI-style visual tech art." />
+  <meta property="og:description" content="Krishnendu Maji (Cyber Slot) - systems, audio and visual software built from first principles: kernels, VMs, math-driven audio engines and desktop tools." />
   <meta property="og:image" content="https://ytcyberslotp90.github.io/favicon.ico" />
   <meta property="og:type" content="website" />
-  
-  <title>Cyber Slot - Official Website</title>
+
+  <title>Cyber Slot - Krishnendu Maji</title>
   <link rel="canonical" href="https://ytcyberslotp90.github.io/"/>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <canvas id="matrix"></canvas>
 
-  <header>
-    <a href="https://www.youtube.com/@CyberSlot-P90" target="_blank" rel="noopener noreferrer">
-      <img src="https://yt3.googleusercontent.com/VQ8g2TGeoEJDsfAl1ET-XFnSaG0DplnfKsC61db86zGYPdoyXzYzHeJlGKkMxtomoSl0sKAn=s120-c-k-c0x00ffffff-no-rj" alt="Cyber Slot Logo">
+  <div class="grain"></div>
+  <div class="glow-field" aria-hidden="true"></div>
+
+  <header id="site-header">
+    <a class="brand" href="#top">
+      <img src="https://yt3.googleusercontent.com/VQ8g2TGeoEJDsfAl1ET-XFnSaG0DplnfKsC61db86zGYPdoyXzYzHeJlGKkMxtomoSl0sKAn=s120-c-k-c0x00ffffff-no-rj" alt="Cyber Slot logo" class="brand-logo">
+      <span class="brand-name">Cyber Slot</span>
     </a>
-    <div>
-      <h1>Cyber Slot</h1>
-      <div class="subtitle">Official Website</div>
-    </div>
+
+    <nav class="primary-nav">
+      <a href="#about">About</a>
+      <a href="#work">Projects</a>
+      <a href="#stack">Stack</a>
+      <a href="#connect">Connect</a>
+    </nav>
+
+    <a class="nav-cta" href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer">
+      Open App Store
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <nav>
-    <a href="https://www.youtube.com/@CyberSlot-P90" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 5px;">
-     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/120px-YouTube_full-color_icon_%282017%29.svg.png" 
-       alt="ytlogo" 
-       style="width: 30px; height: 20px; gap: 8px;">
-       YouTube
-    </a>
-    <a href="https://www.youtube.com/@krishnendumajivlogs8626-z9h" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 5px;">
-     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/120px-YouTube_full-color_icon_%282017%29.svg.png" 
-       alt="ytlogo" 
-       style="width: 30px; height: 20px; gap: 8px;">
-       Second YouTube Channel
-    </a>
-    <a href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 5px;">
-     <img src="https://avatars.githubusercontent.com/u/210217738?v=4" 
-       alt="appstorelogo" 
-       style="width: 20px; height: 20px; gap: 8px;">
-       App Store
-    </a>
-    <a href="https://github.com/ytcyberslotp90" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 5px;">
-     <img src="github.png" 
-       alt="githublogo" 
-       style="width: 20px; height: 20px; gap: 8px;">
-       Github
-    </a>
-</nav>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about">About</a>
+    <a href="#work">Projects</a>
+    <a href="#stack">Stack</a>
+    <a href="#connect">Connect</a>
+    <a href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer">App Store</a>
+  </nav>
 
- <div class="section">
-  <h2>About Cyber Slot</h2>
+  <main id="top">
 
-  <p>
-    Hello everyone! I’m <strong>Cyber Slot</strong> (Krishnendu Maji).
-    I’m from Bankura, West Bengal, India.
-  </p>
+    <!-- HERO -->
+    <section class="hero">
+      <canvas id="scene" aria-hidden="true"></canvas>
 
-  <p>
-    I’m not into gaming, so you won’t see BGMI, Free Fire, or similar games on this channel.
-    However, if you ask what games I play, I sometimes play <strong>Minecraft</strong> and <strong>Roblox</strong> (<strong>Zz36339</strong> on Roblox) casually.
-  </p>
+      <div class="hero-inner">
+        <p class="eyebrow">Krishnendu Maji &nbsp;·&nbsp; Bankura, West Bengal, India</p>
+        <h1 class="hero-title">
+          I build <span class="grad-text">software close to the metal</span> -
+          kernels, engines, and things that render themselves.
+        </h1>
+        <p class="hero-sub">
+          Solo developer working across C#, C/C++, x86 Assembly and the web.
+          Kernels, virtual machines, generative audio engines, and desktop
+          tools - built independently, released as open source, under the
+          name <strong>Cyber Slot</strong>.
+        </p>
 
-  <p>
-    Some people (and even AI) assume I’m linked with gaming because my handle contains
-    <strong>“p90”</strong>.
-    That’s not true — YouTube automatically assigned my handle
-    (<code>@cyberslot-p90</code>).
-    Later, I found out that “P90” is actually a gaming weapon.
-    It has nothing to do with my content.
-  </p>
+        <div class="hero-tags">
+          <span class="pill">Systems &amp; OS Dev</span>
+          <span class="pill">Generative Audio</span>
+          <span class="pill">Emulation</span>
+          <span class="pill">Cryptography Tooling</span>
+          <span class="pill">Game Dev</span>
+        </div>
 
-  <p>
-    What I truly love is <strong>computers, GDI visuals, and math‑based Bytebeat audio</strong>.
-  </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">See the work</a>
+          <a class="btn btn-ghost" href="https://github.com/ytcyberslotp90" target="_blank" rel="noopener noreferrer">GitHub profile</a>
+        </div>
+      </div>
 
-  <p>
-    On this channel, I create <strong>harmless, fake GDI‑style visual malware</strong>
-    purely for fun, creativity, and experimentation.
-    Everything here is completely safe — just cool visual effects and tech art.
-  </p>
-</div>
-  
-  
-  <div class="section">
-    <h2>What I do</h2>
-    <ul>
-      <li>I build automation tools and Batch/C#/PowerShell-based GDI & Bytebeat projects.</li>
-      <li>I create desktop applications using C# (I prefer C# over C/C++, not sure why 😅).</li>
-      <li>I experiment with malware simulations, fake BSODs, boot menus, and ethical prank tools.</li>
-      <li>I make cool videos and share code for curious minds!</li>
-    </ul>
-    <p class="quote">
-      "Please <a href="https://www.youtube.com/channel/UCON2q5tin1NHZ0J6G7Yi_Kw?sub_confirmation=1" target="_blank" rel="noopener noreferrer">
-      subscribe</a> to Cyber Slot and support my work."
-    </p>
-  </div>
+      <div class="scroll-cue" aria-hidden="true"><span></span></div>
+    </section>
 
-  <div class="section">
-    <h2>What I enjoy</h2>
-    <ul>
-      <li>👩‍💻 Coding for hours</li>
-      <li>🧠 Reverse Engineering (for fun)</li>
-      <li>💻 Batch + PowerShell Automation</li>
-      <li>🌀 GDI + Bytebeat formulas</li>
-      <li>📼 Making New Projects For You</li>
-      <li>➗ Mathematics!</li>
-    </ul>
-  </div>
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="section-grid">
+        <div class="section-copy">
+          <p class="section-kicker">About</p>
+          <h2>Not a gamer. A builder.</h2>
+          <p>
+            I'm <strong>Cyber Slot</strong> - Krishnendu Maji, from Bankura,
+            West Bengal. A <code><span id="age"></span></code> years old developer.
+          </p>
+          
+          <p>
+            My channel isn't a gaming channel; you won't find
+            BGMI or Free Fire here. If you're curious, I occasionally play
+            <strong>Minecraft</strong> and <strong>Roblox</strong>
+            (<code>Zz36339</code>) - casually, not competitively.
+          </p>
+          <p>
+            The <strong>"P90"</strong> in my handle isn't a reference to the
+            weapon either - YouTube generated <code>@cyberslot-p90</code> for
+            me automatically. I only learned what it meant afterward.
+          </p>
+          <p>
+            What actually holds my attention is <strong>computers</strong>,
+            <strong>GDI-driven visuals</strong>, and
+            <strong>math-based audio</strong> - Bytebeat formulas, custom
+            waveform synthesis, and the kind of software that generates its
+            own imagery and sound from a few lines of math.
+          </p>
+        </div>
 
-  <div class="section">
-    <h2>Projects 🚀</h2>
-    <nav>
-      <a href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer">Click this button to view all projects</a>
-    </nav>
-  </div>
+        <div class="section-aside">
+          <div class="glass-card fact-card">
+            <p class="fact-label">Main Matrix</p>
+            <p class="fact-title"><a href="https://ytcyberslotp90.github.io/appstore" target="_blank" style="color: var(--c-cyan); text-decoration: none;"> Cyber Slot App Store →</a></p>
+            <p class="fact-body">Our main unified application index. Access every tool, utility, layout, and raw engine build directly.</p>
+          </div>
 
-  <div class="section">
-    <h2>Discord</h2>
-    <nav>
-      <a href="http://dsc.gg/cyberslotp90" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 5px;">
-     <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e278299a53f5bf88615e90_Symbol.svg" 
-       alt="discordlogo" 
-       style="width: 30px; height: 20px; gap: 8px;">
-       Join our discord server
-    </a>
-    </nav>
-    <p>Want to explore more? Click the links above. <br>
-    <em>Please subscribe to me and <a href="https://www.youtube.com/@Endermanch" target="_blank" rel="noopener noreferrer">Endermanch</a>.</em>
-    </p>
-  </div>
+          <div class="glass-card fact-card">
+            <p class="fact-label">Development Feed</p>
+            <p class="fact-title"><a href="https://github.com/ytcyberslotp90?tab=repositories" target="_blank" style="color: var(--c-violet); text-decoration: none;"><i class="fa-brands fa-github"></i> Source Repositories →</a></p>
+            <p class="fact-body">The absolute root files. Every build, custom kernel configuration, shell prototype, and script file is publicly indexed.</p>
+          </div>
+
+          <div class="glass-card fact-card">
+            <p class="fact-label">Real-time Relay</p>
+            <p class="fact-title"><a href="http://dsc.gg/cyberslotp90" target="_blank" style="color: var(--c-pink); text-decoration: none;"><i class="fa-brands fa-discord"></i> Discord Debug Server →</a></p>
+            <p class="fact-body">Join our testing group to view live build updates, syntax rules, script experiments, and community code talk.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT I DO / ENJOY -->
+    <section class="section" id="focus">
+      <p class="section-kicker center">Focus</p>
+      <h2 class="center">What I spend my time on</h2>
+
+      <div class="focus-grid">
+        <div class="glass-card tilt-card">
+          <div class="focus-icon"><i class="fa-solid fa-keyboard"></i></div>
+          <h3>Desktop tools in C#</h3>
+          <p>WinForms and .NET apps - screen recorders, voice assistants,
+            editors - with real attention to native feel and performance.</p>
+        </div>
+        <div class="glass-card tilt-card">
+          <div class="focus-icon"><i class="fa-solid fa-bug"></i></div>
+          <h3>Reverse engineering</h3>
+          <p>Pulling apart bytecode and binaries for the puzzle of it, then
+            rebuilding what I find in a language I actually want to ship in.</p>
+        </div>
+        <div class="glass-card tilt-card">
+          <div class="focus-icon"><i class="fa-solid fa-wave-square"></i></div>
+          <h3>GDI &amp; Bytebeat</h3>
+          <p>Procedural visuals and audio generated from formulas - no
+            samples, no assets, just math rendered in real time.</p>
+        </div>
+        <div class="glass-card tilt-card">
+          <div class="focus-icon"><i class="fa-solid fa-microchip"></i></div>
+          <h3>Low-level systems</h3>
+          <p>Hobby kernels and HALs in C and x86 Assembly - interrupts,
+            disk I/O, and the bugs that only show up at ring zero.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="work">
+      <p class="section-kicker center">Selected work</p>
+      <h2 class="center">Projects</h2>
+      <p class="section-lede center">
+        A handful of what's shipped. The full, browsable catalogue lives in
+        the App Store.
+      </p>
+
+      <div class="work-more">
+        <a class="btn btn-ghost" href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer">
+          View the full App Store →
+        </a>
+      </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section class="section" id="connect">
+      <p class="section-kicker center">Elsewhere</p>
+      <h2 class="center">Find the rest of the work</h2>
+
+      <div class="connect-grid">
+        <a class="glass-card connect-card tilt-card" href="https://www.youtube.com/@CyberSlot-P90" target="_blank" rel="noopener noreferrer">
+          <img class="connect-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/120px-YouTube_full-color_icon_%282017%29.svg.png" alt="">
+          <span class="connect-title">YouTube</span>
+          <span class="connect-sub">Main channel - builds, breakdowns, demos</span>
+        </a>
+
+        <a class="glass-card connect-card tilt-card" href="https://www.youtube.com/@krishnendumajivlogs8626-z9h" target="_blank" rel="noopener noreferrer">
+          <img class="connect-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/120px-YouTube_full-color_icon_%282017%29.svg.png" alt="">
+          <span class="connect-title">Second Channel</span>
+          <span class="connect-sub">Vlogs and off-topic uploads</span>
+        </a>
+
+        <a class="glass-card connect-card tilt-card" href="https://github.com/ytcyberslotp90" target="_blank" rel="noopener noreferrer">
+          <div class="connect-icon"><i class="fa-brands fa-github"></i></div>
+          <span class="connect-title">GitHub</span>
+          <span class="connect-sub">@ytcyberslotp90 - all source, all open</span>
+        </a>
+
+        <a class="glass-card connect-card tilt-card" href="https://ytcyberslotp90.github.io/appstore" target="_blank" rel="noopener noreferrer">
+          <img class="connect-icon" src="https://avatars.githubusercontent.com/u/210217738?v=4" alt="">
+          <span class="connect-title">App Store</span>
+          <span class="connect-sub">Every project, browsable and linked</span>
+        </a>
+
+        <a class="glass-card connect-card tilt-card" href="http://dsc.gg/cyberslotp90" target="_blank" rel="noopener noreferrer">
+          <img class="connect-icon" src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e278299a53f5bf88615e90_Symbol.svg" alt="">
+          <span class="connect-title">Discord</span>
+          <span class="connect-sub">Join the server</span>
+        </a>
+      </div>
+
+      <p class="shoutout">
+        Also go support to <a href="https://www.youtube.com/@Endermanch" target="_blank" rel="noopener noreferrer">Endermanch</a>.
+      </p>
+    </section>
+
+  </main>
 
   <footer>
-  &copy; 2025–<script>document.write(new Date().getFullYear())</script>
-  <a href="https://www.youtube.com/@CyberSlot-P90" target="_blank" rel="noopener noreferrer">
-    Cyber Slot
-  </a>.
-  All rights reserved. Made with ❤️ by Krishnendu Maji
-</footer>
+    <span>&copy; 2025–<span id="year"></span> Cyber Slot. Made by Krishnendu Maji.</span>
+  </footer>
 
-<script src="matrix.js"></script>
-<script src="ai.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
