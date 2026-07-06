@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Slot Store</title>
+<link rel="icon" href="https://avatars.githubusercontent.com/u/210217738?v=4">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght=500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+</head>
+
+<body>
+<div id="scrollProgress"></div>
+<div class="bg-grid" id="bgGrid"></div>
+<div class="glow g1" id="glow1"></div>
+<div class="glow g2" id="glow2"></div>
+<div class="glow g3" id="glow3"></div>
+
+<div id="toast" class="toast"><i class="fa-solid fa-circle-check" style="color:var(--ok)"></i> <span id="toast-msg">Saved</span></div>
+
+<div id="settings-overlay" class="settings-overlay" onclick="closeSettings()"></div>
+<aside id="settings-panel" class="settings-panel">
+  <div class="p-5" style="border-bottom:1px solid var(--border)">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="font-display font-bold text-base" style="color:var(--text)">Settings</div>
+        <div class="text-xs mt-0.5" style="color:var(--text3)">Customize your store</div>
+      </div>
+      <button onclick="closeSettings()" class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--surface2);color:var(--text2)"><i class="fa-solid fa-xmark text-sm"></i></button>
+    </div>
+  </div>
+  <div class="p-5 flex flex-col gap-5">
+    <div>
+      <div class="settings-sec-title">Interface</div>
+      <div class="toggle-wrap">
+        <div><div class="toggle-label">Compact Layout</div><div class="toggle-sub">Smaller tiles, tighter grid</div></div>
+        <div id="toggle-compact" class="toggle" onclick="toggleCompact(this)"></div>
+      </div>
+      <div class="toggle-wrap">
+        <div><div class="toggle-label">Glassmorphism</div><div class="toggle-sub">Blur &amp; transparency panels</div></div>
+        <div id="toggle-glass" class="toggle on" onclick="toggleGlass(this)"></div>
+      </div>
+      <div class="toggle-wrap">
+        <div><div class="toggle-label">Hover Lift</div><div class="toggle-sub">Subtle tile hover motion</div></div>
+        <div id="toggle-3d" class="toggle on" onclick="toggle3D(this)"></div>
+      </div>
+      <div class="toggle-wrap">
+        <div><div class="toggle-label">Ambient Glow</div><div class="toggle-sub">Soft background color blobs</div></div>
+        <div id="toggle-orbs" class="toggle on" onclick="toggleOrbs(this)"></div>
+      </div>
+      <div class="toggle-wrap">
+        <div><div class="toggle-label">Reduce Motion</div><div class="toggle-sub">Disable animation &amp; parallax</div></div>
+        <div id="toggle-motion" class="toggle" onclick="toggleMotion(this)"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-sec-title">Accent Pair</div>
+      <div class="flex gap-2.5 flex-wrap">
+        <div class="duo-swatch active" style="background:linear-gradient(135deg,#22d3ee,#8b5cf6)" data-c1="#22d3ee" data-c2="#8b5cf6" onclick="setAccent(this)" title="Cyan / Violet"></div>
+        <div class="duo-swatch" style="background:linear-gradient(135deg,#fb6f92,#f5a524)" data-c1="#fb6f92" data-c2="#f5a524" onclick="setAccent(this)" title="Rose / Amber"></div>
+        <div class="duo-swatch" style="background:linear-gradient(135deg,#2dd4a7,#3b82f6)" data-c1="#2dd4a7" data-c2="#3b82f6" onclick="setAccent(this)" title="Teal / Blue"></div>
+        <div class="duo-swatch" style="background:linear-gradient(135deg,#a855f7,#ec4899)" data-c1="#a855f7" data-c2="#ec4899" onclick="setAccent(this)" title="Purple / Pink"></div>
+        <div class="duo-swatch" style="background:linear-gradient(135deg,#f5a524,#fb6f92)" data-c1="#f5a524" data-c2="#fb6f92" onclick="setAccent(this)" title="Amber / Rose"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-sec-title">Font Size</div>
+      <div class="flex gap-2">
+        <button onclick="setFont('sm')" id="font-sm" class="chip active" style="flex:1;justify-content:center">Small</button>
+        <button onclick="setFont('md')" id="font-md" class="chip" style="flex:1;justify-content:center">Default</button>
+        <button onclick="setFont('lg')" id="font-lg" class="chip" style="flex:1;justify-content:center">Large</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-sec-title">Grid Density</div>
+      <div class="flex gap-2">
+        <button onclick="setGrid('cozy')" id="grid-cozy" class="chip active" style="flex:1;justify-content:center">Cozy</button>
+        <button onclick="setGrid('dense')" id="grid-dense" class="chip" style="flex:1;justify-content:center">Dense</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-sec-title">About</div>
+      <div class="rounded-xl p-3 text-xs" style="background:var(--surface2);color:var(--text2);line-height:1.7;border:1px solid var(--border)">
+        <strong style="color:var(--text)">Cyber Slot Store</strong><br>
+        v3.1 · Open Source<br>
+        Built by <a href="https://github.com/ytcyberslotp90" target="_blank" style="color:var(--accent)">@ytcyberslotp90</a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<header class="topbar">
+  <div class="flex items-center gap-3 px-4 h-14">
+    <button onclick="routeHome()" class="flex items-center gap-2.5 mr-1 flex-shrink-0">
+      <img src="https://avatars.githubusercontent.com/u/210217738?v=4" alt="" class="w-8 h-8 rounded-xl">
+      <div class="hidden sm:block text-left">
+        <div class="logo-text">Cyber<span class="dim">Slot</span></div>
+        <div class="logo-sub">STORE</div>
+      </div>
+    </button>
+
+    <div class="search-wrap flex-1 max-w-sm">
+      <i class="fa-solid fa-magnifying-glass text-xs" style="color:var(--text3)"></i>
+      <input id="searchInput" type="text" placeholder="Search apps, code, links…" oninput="handleSearch(this.value)">
+      <span class="kbd-hint hidden sm:inline">⌘K</span>
+    </div>
+
+    <div class="flex-1"></div>
+
+    <nav class="hidden lg:flex items-center gap-0.5">
+      <a href="https://github.com/ytcyberslotp90" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium" style="color:var(--text2)"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://www.youtube.com/@cyberslot-90" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium" style="color:var(--text2)"><i class="fa-brands fa-youtube"></i> YouTube</a>
+      <a href="mailto:testacc3633@gmail.com" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium" style="color:var(--text2)"><i class="fa-solid fa-envelope"></i> Mail</a>
+    </nav>
+
+    <button onclick="openSettings()" class="w-9 h-9 rounded-xl flex items-center justify-center ml-1" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border2)">
+      <i class="fa-solid fa-sliders text-sm"></i>
+    </button>
+  </div>
+</header>
+
+<div class="flex flex-1 relative z-10">
+
+  <aside class="hidden md:flex flex-col sidebar w-56 px-2.5 py-4 gap-0.5 flex-shrink-0">
+    <div class="sidebar-label">Browse</div>
+    <div class="nav-item active" id="nav-home" onclick="routeHome();setNav('nav-home')"><i class="fa-solid fa-house-chimney"></i> Home</div>
+    <div class="nav-item" id="nav-all" onclick="filterCategory('all');setNav('nav-all')">
+      <i class="fa-solid fa-grid-2"></i> All Apps <span class="nav-count" id="count-all">0</span>
+    </div>
+
+    <div class="sidebar-label" style="margin-top:16px">Categories</div>
+    <div id="nav-categories" class="flex flex-col gap-0.5"></div>
+
+    <div class="sidebar-label" style="margin-top:16px">Library</div>
+    <div class="nav-item" id="nav-codes" onclick="showPage('codes');setNav('nav-codes')">
+      <i class="fa-solid fa-code"></i> Codes <span class="nav-count" id="count-codes">0</span>
+    </div>
+    <div class="nav-item" id="nav-websites" onclick="showPage('websites');setNav('nav-websites')">
+      <i class="fa-solid fa-link"></i> Awesome Websites <span class="nav-count" id="count-websites">0</span>
+    </div>
+
+    <div class="mt-auto pt-4 px-1" style="border-top:1px solid var(--border)">
+      <p class="text-[.7rem] leading-relaxed" style="color:var(--text3)">
+        All apps are free &amp; open-source.<br>
+        <a href="https://github.com/ytcyberslotp90" target="_blank" style="color:var(--accent)">View on GitHub →</a>
+      </p>
+    </div>
+  </aside>
+
+  <main id="mainScroll" class="flex-1 overflow-y-auto min-h-[calc(100vh-57px)]">
+    <div id="main-wrap">
+
+      <div id="page-home" class="page p-5 max-w-6xl mx-auto">
+        <div class="hero">
+          <div>
+            <div class="eyebrow"><span class="d"></span> Free &amp; open source</div>
+            <h1 class="hero-title">Everything Cyber Slot<br>has <span class="grad">shipped</span>.</h1>
+            <p class="hero-sub">Batch chaos, GDI visuals, terminal tools, raw code you can lift straight into your own projects, and links worth bookmarking. All free, all open-source.</p>
+            <div class="hero-cta">
+              <button onclick="filterCategory('all');setNav('nav-all')" class="btn-accent"><i class="fa-solid fa-grid-2"></i> Browse Apps</button>
+              <button onclick="showPage('codes');setNav('nav-codes')" class="btn-glass"><i class="fa-solid fa-code"></i> View Codes</button>
+              <a href="https://github.com/ytcyberslotp90" target="_blank" class="btn-glass"><i class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+            <div class="hero-stats">
+              <div class="hstat"><b id="hstat-apps">0</b><span>APPS</span></div>
+              <div class="hstat"><b id="hstat-codes">0</b><span>CODE SNIPPETS</span></div>
+              <div class="hstat"><b id="hstat-sites">0</b><span>LINKS</span></div>
+              <div class="hstat"><b>100%</b><span>OPEN SOURCE</span></div>
+            </div>
+          </div>
+
+          <div class="showcase">
+            <div class="card-label" style="margin-bottom:14px">Recent apps</div>
+            <div class="showcase-grid" id="heroShowcase"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-9 reveal">
+          <div class="stat-card"><b id="stat-count">0</b><span>TOTAL MODULES</span></div>
+          <div class="stat-card"><b>100%</b><span>OPEN SOURCE</span></div>
+          <div class="stat-card"><b>FREE</b><span>ALWAYS</span></div>
+          <div class="stat-card"><b>WINDOWS</b><span>PLATFORM</span></div>
+        </div>
+
+        <div class="section-head reveal"><h2>Featured</h2></div>
+        <div id="home-featured" class="grid-tiles grid-cols-cozy gap-3 mb-9"></div>
+
+        <div class="section-head reveal"><h2>All Apps</h2></div>
+        <div id="home-all" class="grid-tiles grid-cols-cozy gap-3 mb-9"></div>
+
+        <div class="section-head reveal"><h2>Code Snippets</h2><span class="section-link" onclick="showPage('codes');setNav('nav-codes')">View all →</span></div>
+        <div id="home-codes-teaser" class="grid-tiles grid-cols-cozy gap-3 mb-9 reveal"></div>
+
+        <div class="section-head reveal"><h2>Awesome Websites</h2><span class="section-link" onclick="showPage('websites');setNav('nav-websites')">View all →</span></div>
+        <div id="home-sites-teaser" class="grid-tiles grid-cols-cozy gap-3 mb-4 reveal"></div>
+      </div>
+
+      <div id="page-catalog" class="page p-5 max-w-6xl mx-auto">
+  <div class="bc"><span class="bc-link" onclick="routeHome();setNav('nav-home')">Home</span><span>/</span><span class="bc-cur" id="catalog-bc">All Apps</span></div>
+  <div class="flex gap-2 flex-wrap mb-5" id="chip-bar"></div>
+  <div id="catalog-grid" class="grid-tiles grid-cols-cozy gap-3"></div>
+  <div id="catalog-empty" class="hidden empty-state"><i class="fa-solid fa-magnifying-glass"></i><h4>No apps found</h4><p>Nothing in this category yet.</p></div>
+</div> <div id="page-search" class="page p-5 max-w-6xl mx-auto">
+  <div class="bc">
+    <span class="bc-link" onclick="routeHome();setNav('nav-home')">Home</span>
+    <span>/</span>
+    <span class="bc-cur" id="search-count">Search Results</span>
+  </div>
+  <div id="search-grid" class="grid-tiles grid-cols-cozy gap-3"></div>
+  <div id="search-empty" class="hidden empty-state">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <h4>No results found</h4>
+    <p>Try searching for a different keyword.</p>
+  </div>
+</div>
+
+      <div id="page-codes" class="page p-5 max-w-6xl mx-auto">
+        <div class="bc"><span class="bc-link" onclick="routeHome();setNav('nav-home')">Home</span><span>/</span><span class="bc-cur">Codes</span></div>
+        <div class="section-head"><h2>Code Snippets</h2></div>
+        <div id="codes-grid" class="grid-tiles grid-cols-cozy gap-3"></div>
+        <div id="codes-empty" class="hidden empty-state">
+          <i class="fa-solid fa-code"></i>
+          <h4>No code snippets yet</h4>
+          <p>Add entries to the <code>codes</code> array in <code>appsinfo.json</code> to populate this page.</p>
+        </div>
+      </div>
+
+      <div id="page-websites" class="page p-5 max-w-6xl mx-auto">
+        <div class="bc"><span class="bc-link" onclick="routeHome();setNav('nav-home')">Home</span><span>/</span><span class="bc-cur">Websites</span></div>
+        <div class="section-head"><h2>Awesome Websites</h2></div>
+        <div id="websites-grid" class="grid-tiles grid-cols-cozy gap-3"></div>
+        <div id="websites-empty" class="hidden empty-state">
+          <i class="fa-solid fa-link"></i>
+          <h4>No links yet</h4>
+          <p>Add entries to the <code>websites</code> array in <code>appsinfo.json</code> to populate this page.</p>
+        </div>
+      </div>
+
+      <div id="page-detail" class="page p-5 max-w-4xl mx-auto">
+        <div class="bc">
+          <span class="bc-link" onclick="routeHome();setNav('nav-home')">Home</span><span>/</span>
+          <span class="bc-link" id="detail-bc-cat">Category</span><span>/</span>
+          <span class="bc-cur" id="detail-bc-name">Item</span>
+        </div>
+
+        <div class="detail-hero" id="detail-hero">
+          <div class="flex gap-5 items-start flex-wrap relative z-10">
+            <div id="detail-icon" class="detail-icon"></div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs mb-2" style="color:var(--text3)">by Cyber Slot</div>
+              <h1 id="detail-name" class="font-display mb-2" style="font-weight:700;font-size:1.5rem;color:var(--text)"></h1>
+              <div class="flex items-center gap-2 mb-3 flex-wrap">
+                <span id="detail-cat-pill" class="pill"></span>
+                <span id="detail-ver-pill" class="pill pill-ghost"></span>
+              </div>
+              <p id="detail-short-desc" class="text-sm leading-relaxed mb-4 max-w-lg" style="color:var(--text2)"></p>
+              <div id="detail-actions" class="flex gap-2.5 flex-wrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="detail-body-app" class="grid md:grid-cols-3 gap-4">
+          <div class="md:col-span-2 flex flex-col gap-4">
+            <div class="glass-2 rounded-2xl p-5">
+              <div class="card-label">About</div>
+              <p id="detail-about" class="text-sm leading-relaxed" style="color:var(--text2)"></p>
+            </div>
+            <div class="glass-2 rounded-2xl p-5">
+              <div class="card-label">Tags</div>
+              <div id="detail-tags" class="flex flex-wrap gap-1.5"></div>
+            </div>
+          </div>
+          <div class="glass-2 rounded-2xl p-5 h-fit">
+            <div class="card-label">Details</div>
+            <div id="detail-info"></div>
+          </div>
+        </div>
+
+        <div id="detail-body-code" class="hidden flex flex-col gap-4">
+          <div class="relative mt-8 w-full">
+            
+            <div class="absolute left-0 top-0 translate-y-[-100%] bg-[#000000] border border-zinc-800 border-b-0 px-4 py-2 rounded-t font-mono text-xs font-semibold uppercase tracking-wider text-rose-400">
+              <span id="detail-code-lang">CODE</span>
+            </div>
+
+            <button id="detail-copy-btn" class="absolute right-0 top-0 translate-y-[-100%] bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 border-b-0 text-zinc-300 hover:text-white font-mono text-xs font-medium px-4 py-2 rounded-t flex items-center gap-1.5 transition-colors" onclick="copyCode()">
+  <i class="fa-regular fa-copy"></i> Copy
+</button>
+            
+            <div id="detail-code-editor" class="border border-zinc-800 rounded-b rounded-tr-none rounded-tl-none w-full" style="height: 430px;"></div>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<footer class="relative z-10 border-t px-5 py-3 flex items-center justify-between flex-wrap gap-3" style="background:var(--glass-bg);border-color:var(--border);backdrop-filter:blur(20px);font-size:.75rem">
+  <span style="color:var(--text3)">© 2025–<span id="yr"></span> Cyber Slot — free &amp; open-source forever</span>
+  <div class="flex gap-4">
+    <a href="https://github.com/ytcyberslotp90" target="_blank" style="color:var(--text3)"><i class="fa-brands fa-github mr-1"></i>GitHub</a>
+    <a href="https://www.youtube.com/@cyberslot-90" target="_blank" style="color:var(--text3)"><i class="fa-brands fa-youtube mr-1"></i>YouTube</a>
+    <a href="mailto:testacc3633@gmail.com" style="color:var(--text3)"><i class="fa-solid fa-envelope mr-1"></i>Mail</a>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
